@@ -35,7 +35,7 @@ async def fork_question(callback: types.CallbackQuery):
     q_set = await QuizController.prepare_quiz_set_for_user(q_answer)
     user_id = str(callback.from_user.id)
     cached = await CacheController.create_q_set(user_id=user_id, new_data=q_set)
-    logger.info(cached)
+    logger.debug(cached)
     next_q = await QuizController.get_next_question(cached_data=cached, user_id=user_id)
     await callback.message.edit_text(text=next_q.Q,
                                      reply_markup=await ButtonsController.generate_buttons(next_q))
